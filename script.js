@@ -1,4 +1,11 @@
 // Animating on canvas. 
+let playerState = "run";
+const dropdown = document.getElementById('animations');
+dropdown.addEventListener('change', function(e){ // event listener for the drop down. Each time it's clicked, change playerState to the value of target animation. 
+    playerState = e.target.value; // referring to an element that is clicked from the dropdown. The values we've added in the HTML <options>. (e) = event object
+})
+
+
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width = 600;//global variable for canvas width
@@ -8,7 +15,7 @@ const playerImage = new Image(); //Same as HTML, image tag
 playerImage.src = 'shadow_dog.png'; //img needs to be in root folder to render!
 const spriteWidth = 575;
 const spriteHeight = 523;
-let playerState = "run";
+
 
 let gameFrame = 0;
 const staggerFrames = 5; //slowing down animation by an amount. Higher number = slower animation 
@@ -17,7 +24,7 @@ const animationStates = [
     {//first row of animations
         name: "idle", 
         frame: 7,
-        loc: [
+        /*loc: [
             {x: 0, y: 0},
             {x:575, y: 0},
             {x:1150, y: 0},
@@ -25,12 +32,12 @@ const animationStates = [
             {x:2300, y:0},
             {x:2875, y:0},
             {x:3450, y:0}
-        ]
+        ]*/
     },
     { //second row of animations
         name: "jump", 
         frame: 7,
-        loc: [
+      /*  loc: [
             {x: 0, y: 523},
             {x: 575, y: 523},
             {x: 1150, y: 523},
@@ -38,7 +45,7 @@ const animationStates = [
             {x: 2300, y: 523},
             {x: 2875, y: 523},
             {x: 3450, y: 523}
-        ]
+        ]*/
     },
     {//third row of animations
         name: "fall", 
@@ -75,7 +82,7 @@ const animationStates = [
 ];
 // .forEach method:
 animationStates.forEach((state, index) => {
-    let frames ={
+    let frames = {
         loc:[],
     }
     for (let j = 0; j < state.frames; j++){
@@ -95,7 +102,7 @@ function animate(){
     //9 argumment:  ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh) sw=src width & d = destination width. 
     let position = Math.floor(gameFrame/staggerFrames) % spriteAnimations[playerState].loc.length; //times 6 idle frames. position variable will increase until it gets to 6.
     let frameX = spriteWidth * position;
-    let frameY = spriteAnimations[playerState].loc[position].y; //can do this for frameX but both line 69 and 70 will work for x and y. 
+    let frameY = spriteAnimations[playerState].loc[position].y;
 
 
     ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight); // pass player image with  X & Y coordinates. (In this case from top left corner of canvas)
@@ -114,7 +121,7 @@ function animate(){
     requestAnimationFrame(animate); //calling parent function. Will loop over and over in an animation loop.
 
 };
-animate(); 
+animate();
 
 /*spriteAnimations = [
     "idle" = {
